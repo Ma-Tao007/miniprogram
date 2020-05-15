@@ -1,11 +1,5 @@
 
-const BASE_URL = "https://xcx.cimeec.com//mxshop"
-// const BASE_URL = "http://j5gff9.natappfree.cc//mxshop"
-//wxdf8604156199fc5e   服务器
-//wx53f429bcff7189d6  hyl
-//wxfd304748e109dadb  mt
-//测试账号：15091224866
-
+const BASE_URL = "http://24ax5y.natappfree.cc"
 //配置前端请求拦截
 export default {BASE_URL}
 

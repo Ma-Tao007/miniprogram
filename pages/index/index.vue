@@ -1,7 +1,8 @@
 <template>
 	<view class="content">
 		<view style='text-align: center; height: 50%;margin-bottom: 40px;'>
-			<image class="logo" mode="aspectFit" src="/static/ynlogo01.png"></image><br>
+			 <image class="logo" mode="aspectFit" src="/static/logo.png"></image><br>
+			
 		</view>
 		<form @submit="login">
 			<view class="myno">
@@ -31,14 +32,6 @@
 					<image class="show" @click="pass" :hidden='password=="text"' style="width: 20px;height: 20px;" src="../../static/by.png" ></image>
 					<image class="show" @click="pass" :hidden='password=="password"' style="width: 20px;height: 20px;" src="../../static/yj.png" ></image>
 				</view>
-			</view>
-			<view class='input_bottom'>
-				<label class='repass'  @click="changePass(rempass)">
-					<checkbox class='checkbox' style="transform:scale(0.8)" :checked="rempass"/>记住用户名
-				</label>
-				<label @click="playPhone()" class='forgetPass'>
-					忘记密码
-				</label>
 			</view>
 
 			<view class="loginBtnView">
@@ -98,25 +91,27 @@
 					return
 				}
 				uni.request({
-					url: requestUtils.BASE_URL + "/login/login.do",
+					url: requestUtils.BASE_URL + "/mine/",
 					data: {
-						"mobile": this.username,
-						"password": hex_md5(this.passwordValue),
-						"ValCode": '1234',
-						"kind": "1"
+						"number": this.username,
+						"identity": "pbkdf2_sha256$150000$MvL7Co1rzuxz$rN3c8XYyG7Z+STKFHbMEjuGlJhQPxT6YBTQwMpfvbfI=",
+						// "csrfmiddlewaretoken": 'sIYjiO4LMojlizXeKNlxrsgV0Pvzqbgl32tGt1bLwkgAR5QmwjI3oO8D7bQGolOX',
+						// "kind": "1"
 					},
+					method:"post",
 					success: (res) => {
+						console.log(res)
 						if (res.data.success) {
-							uni.setStorageSync('SESSION', res.header["Set-Cookie"].split(";")[0]);
+							//uni.setStorageSync('SESSION', res.header["Set-Cookie"].split(";")[0]);
 							//在跳转之前询问是否记住密码
-							if (this.rempass) {
-								//这里将登录信息存到缓存中
-								uni.setStorageSync('UserInfo', {username:this.username,password:this.passwordValue});
-							}
-							uni.reLaunch({
-								url: '/pages/waitoffer/waitoffer'
-							});
-
+							// if (this.rempass) {
+							// 	//这里将登录信息存到缓存中
+							// 	uni.setStorageSync('UserInfo', {username:this.username,password:this.passwordValue});
+							// }
+							// uni.reLaunch({
+							// 	url: '/pages/waitoffer/waitoffer'
+							// });
+							console.log(res)
 						} else {
 							uni.showToast({
 								title: res.data.msg,

@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "uni-app",
+  "navigationBarTitleText": "高校课程组教学准备系统",
   "usingComponents": {
     "s-input": "/components/s-input/s-input"
   }
