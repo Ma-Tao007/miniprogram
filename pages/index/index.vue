@@ -1,7 +1,7 @@
 <template>
 	<view class="content">
 		<view style='text-align: center; height: 50%;margin-bottom: 40px;'>
-			 <image class="logo" mode="aspectFit" src="/static/logo.png"></image><br>
+			 <image class="logo" mode="aspectFit" src="/static/logo1.png"></image><br>
 			
 		</view>
 		<form @submit="login">
@@ -44,9 +44,9 @@
 
 <script>
 	const teacherList = [
-		{number:20160001,name:'刘教师',college_id:'1'},
-		{number:20160002,name:'王教师',college_id:'1'},
-		{number:20160003,name:'20160003',college_id:'1'},
+		{number:20160001,name:'刘教师'},
+		{number:20160002,name:'王教师'},
+		{number:20160003,name:'20160003'},
 		]
 	import {hex_md5} from '../../static/js/md5.js'
 	import requestUtils from '../../utils/request.js'
@@ -117,7 +117,7 @@
 					
 					return
 				}else{
-					if(this.password!=flagObj.number){
+					if(this.passwordValue!=flagObj.number){
 						this.btnlogin = false
 						uni.showToast({
 							title:'密码错误',
@@ -133,30 +133,33 @@
 					data: {
 						"number": this.username,
 						"identity": "pbkdf2_sha256$150000$MvL7Co1rzuxz$rN3c8XYyG7Z+STKFHbMEjuGlJhQPxT6YBTQwMpfvbfI=",
-						// "csrfmiddlewaretoken": 'sIYjiO4LMojlizXeKNlxrsgV0Pvzqbgl32tGt1bLwkgAR5QmwjI3oO8D7bQGolOX',
-						// "kind": "1"
 					},
 					method:"post",
 					success: (res) => {
 						console.log(res)
-						if (res.data.success) {
-							//uni.setStorageSync('SESSION', res.header["Set-Cookie"].split(";")[0]);
-							//在跳转之前询问是否记住密码
-							// if (this.rempass) {
-							// 	//这里将登录信息存到缓存中
-							// 	uni.setStorageSync('UserInfo', {username:this.username,password:this.passwordValue});
-							// }
+							//返回结果有7个数组，每一个代表一种含义
+							//全部存到缓存中通过教师number去存储
+							//登录教师信息
+							uni.setStorageSync('teacher',flagObj)
+							//课程信息
+							uni.setStorageSync('coursemessage',res.data[1])
+							//知识点
+							uni.setStorageSync('knowledge',res.data[2])
+							//课程表
+							//课程表需要过滤是当前登录教师的
+							uni.setStorageSync('course',res.data[3])
+							//课件表
+							uni.setStorageSync('course_file',res.data[4])
+							//课程和教师关联表
+							uni.setStorageSync('course_teacher',res.data[5])
+							//课程和知识点关联表
+							uni.setStorageSync('course_knowledge',res.data[6])
 							uni.reLaunch({
 											url: '/pages/course/course'
-										});
-							console.log(res)
-						} else {
-							uni.showToast({
-								title: res.data.msg,
-								icon: 'none'
-							})
+										})
+						
 							this.btnlogin = false
-						}
+						
 					},
 					//接口失败
 					fail:(err)=>{

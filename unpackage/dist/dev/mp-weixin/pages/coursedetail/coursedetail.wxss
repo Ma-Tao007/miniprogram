@@ -1,0 +1,15 @@
+
+.tab.data-v-5501f8b3{
+	width: 100%;
+	text-align: center;
+	margin-top: 10px;
+	margin-bottom: 20px;
+}
+.tab_bar.data-v-5501f8b3{
+	border: 1px #C0C0C0 solid;
+	width: 80%;
+	margin: auto;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+

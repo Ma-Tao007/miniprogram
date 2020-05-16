@@ -1,20 +1,33 @@
 <template>
 	<view style="padding: 15rpx 30rpx;">
-		<view @tap="goBid(course)" v-for="course in courseList" :key="course.course_id">
+		<view v-for="course in courseList" :key="course.course_id">
 			<view class='record_contain'>
 				<view class="field">
 					<view class='key'>课程名称：</view>
-					<view class='value'>{{ course.title }}</view>
+					<view class='value'>{{ course.title || '无' }}</view>
 				</view>
 				<view class="field">
 					<view class='key'>上课方式：</view>
-					<view class='value'>{{ course.teaching_methods }}</view>
+					<view class='value'>{{ course.teaching_methods || '无' }}</view>
 				</view>
 				<view class="field">
-					<view class='key'>课程类型：</view>
-					<view class='value'>{{ course.required }}</view>
+					<view class='key'>课程必修：</view>
+					<view class='value'>{{ course.required || '无' }}</view>
+				</view>
+				<view class="field">
+					<view class='key'>教学教材：</view>
+					<view class='value'>{{ course.teaching_material || '无' }}</view>
+				</view>
+				<view class="field">
+					<view class='key'>课时分配：</view>
+					<view class='value'>{{ course.time_allocation || '无' }}</view>
 				</view>
 				<view style="clear: both;"></view>
+				<view style="margin-top: 10px;">
+					<view><button type="primary" @tap="showKejian()">显示课件</button></view>
+					<view><button type="default" @tap="goBid(course)">显示课程信息</button></view>
+				</view>
+				
 			</view>
 		</view>
 		
@@ -22,32 +35,49 @@
 </template>
 
 <script>
-	var courseList = [
-		{course_id:1,title:'数据结构',teaching_methods:'上机',required:'选修'},
-		{course_id:2,title:'java开发',teaching_methods:'无',required:'必修'},
-		{course_id:3,title:'python',teaching_methods:'上机',required:'选修'}]
-		
+
 	export default {
 		components: {
 			// uniLoadMore
 		},
 		data() {
 			return {
-				courseList:courseList,
+				courseList:[],
 			}
 		},
-		destroyed() {
-		        uni.removeStorageSync('course');
-		    },
+		onShow() {
+			this.courseList = []
+			var courses = uni.getStorageSync('course')
+			var teacher = uni.getStorageSync('teacher')
+			var course_teacher = uni.getStorageSync('course_teacher')
+			var course_ss = []
+			for(var i=0;i<course_teacher.length;i++){
+				if(teacher.number==course_teacher[i].teacher_id){
+					course_ss.push(course_teacher[i])
+				}
+			}
+			
+			for(var i=0;i<course_ss.length;i++){
+				for(var j=0;j<courses.length;j++){
+					if(course_ss[i].courese_id==courses[j].course_id){
+						this.courseList.push(courses[j])
+					}
+				}
+			}
+		},
 		methods: {
 			goBid(course){
 				//通过点击课程跳转，带值跳转
 				 uni.navigateTo({
 				       // ? 后面加要传的参数， 多个参数用 & 隔开 
-				       url: '/pages/coursedetail/coursedetail'
+				       url: '/pages/coursedetail/coursedetail?courseid='+course.course_id
 				    })
-					//需要传的参数
-					uni.setStorageSync('course', course);
+			},
+			showKejian(){
+				uni.navigateTo({
+				      // ? 后面加要传的参数， 多个参数用 & 隔开 
+				      url: '/pages/courseware/courseware'
+				   })
 			}
 		}
 	}
@@ -68,14 +98,14 @@
 		font-size: 32rpx;
 	}
 	.key{
-		width: 30%;
+		width: 25%;
 		float: left;
 		margin-top:4px;
 		font-weight:$uni-font-weight;
 	}
 	.value{
 		float: right;
-		width: 65%;
+		width: 70%;
 		margin-top:4px
 	}
 </style>

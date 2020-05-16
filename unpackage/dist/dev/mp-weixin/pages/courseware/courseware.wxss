@@ -1,1 +1,26 @@
-/* pages/courseware/courseware.wxss */
+
+.record_contain.data-v-c5fe701a{
+	color: #606266;
+}
+.record_contain.data-v-c5fe701a{
+	border: 1px solid #C0C0C0;
+	border-radius: 10rpx;
+	padding:20rpx;
+	margin: 10rpx;
+}
+.field.data-v-c5fe701a{
+	/* margin-top: 15rpx; */
+	font-size: 32rpx;
+}
+.key.data-v-c5fe701a{
+	width: 25%;
+	float: left;
+	margin-top:4px;
+	font-weight:$uni-font-weight;
+}
+.value.data-v-c5fe701a{
+	float: right;
+	width: 70%;
+	margin-top:4px
+}
+
