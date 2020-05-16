@@ -1,0 +1,26 @@
+
+.record_contain.data-v-6dc9a3c5{
+	color: #606266;
+}
+.record_contain.data-v-6dc9a3c5{
+	border: 1px solid #C0C0C0;
+	border-radius: 10rpx;
+	padding:20rpx;
+	margin: 10rpx;
+}
+.field.data-v-6dc9a3c5{
+	/* margin-top: 15rpx; */
+	font-size: 32rpx;
+}
+.key.data-v-6dc9a3c5{
+	width: 30%;
+	float: left;
+	margin-top:4px;
+	font-weight:$uni-font-weight;
+}
+.value.data-v-6dc9a3c5{
+	float: right;
+	width: 65%;
+	margin-top:4px
+}
+
