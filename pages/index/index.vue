@@ -43,6 +43,11 @@
 </template>
 
 <script>
+	const teacherList = [
+		{number:20160001,name:'刘教师',college_id:'1'},
+		{number:20160002,name:'王教师',college_id:'1'},
+		{number:20160003,name:'20160003',college_id:'1'},
+		]
 	import {hex_md5} from '../../static/js/md5.js'
 	import requestUtils from '../../utils/request.js'
 	import SInput from '@/components/s-input/s-input.vue'
@@ -57,17 +62,19 @@
 				passwordValue:'',
 				rempass: false,
 				title: 'Hello',
-				btnlogin: false
+				btnlogin: false,
+				teacherList:teacherList
 			}
 		},
 		onShow(){
-			var UserInfo = uni.getStorageSync("UserInfo")
-			this.passwordValue = UserInfo.password
-			this.username = UserInfo.username
-			this.$refs.uninput.setValue(this.username);
-			if(this.username!='' && this.username){
-				this.rempass = true
-			}
+			// var UserInfo = uni.getStorageSync("UserInfo")
+			// this.passwordValue = UserInfo.password
+			// this.username = UserInfo.username
+			// this.$refs.uninput.setValue(this.username);
+			// if(this.username!='' && this.username){
+			// 	this.rempass = true
+			// }
+			console.log("页面加载")
 		},
 		methods: {
 			changePass(rempass){
@@ -90,6 +97,37 @@
 					this.btnlogin = false
 					return
 				}
+				//判断用户名和密码
+				var flag = false
+				var flagObj = {}
+				for(var i=0;i<this.teacherList.length;i++){
+					var teacher = this.teacherList[i]
+					if(teacher.number==this.username){
+						flag = true;
+						flagObj = teacher
+						break;
+					}
+				}
+				if(!flag){
+					this.btnlogin = false
+					uni.showToast({
+						title:'用户名不存在',
+						icon :'none'
+					})
+					
+					return
+				}else{
+					if(this.password!=flagObj.number){
+						this.btnlogin = false
+						uni.showToast({
+							title:'密码错误',
+							icon :'none'
+						})
+						
+						return
+					}
+				}
+			
 				uni.request({
 					url: requestUtils.BASE_URL + "/mine/",
 					data: {
@@ -108,9 +146,9 @@
 							// 	//这里将登录信息存到缓存中
 							// 	uni.setStorageSync('UserInfo', {username:this.username,password:this.passwordValue});
 							// }
-							// uni.reLaunch({
-							// 	url: '/pages/waitoffer/waitoffer'
-							// });
+							uni.reLaunch({
+											url: '/pages/course/course'
+										});
 							console.log(res)
 						} else {
 							uni.showToast({

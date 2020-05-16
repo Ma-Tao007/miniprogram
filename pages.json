@@ -5,6 +5,24 @@
 			"style": {
 				"navigationBarTitleText": "高校课程组教学准备系统"
 			}
+		},
+		{
+			"path": "pages/course/course",
+			"style": {
+				"navigationBarTitleText": "课程展示"
+			}
+		},
+		{
+			"path": "pages/courseware/courseware",
+			"style": {
+				"navigationBarTitleText": "课件展示"
+			}
+		},
+		{
+			"path": "pages/coursedetail/coursedetail",
+			"style": {
+				"navigationBarTitleText": "课程详情"
+			}
 		}
 	],
 	"globalStyle": {

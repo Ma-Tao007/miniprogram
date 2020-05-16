@@ -1,5 +1,5 @@
 
-const BASE_URL = "http://24ax5y.natappfree.cc"
+const BASE_URL = "http://qguasf.natappfree.cc"
 //配置前端请求拦截
 export default {BASE_URL}
 
